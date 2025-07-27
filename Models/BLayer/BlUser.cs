@@ -647,4 +647,11 @@ namespace ScottmenMainApi.Models.BLayer
 
     }
 
+    public class SpiritDensity
+    {
+        public decimal? density { get; set; } = 0;
+        public decimal? avp { get; set; } = 4000;
+        
+    }
+
 }

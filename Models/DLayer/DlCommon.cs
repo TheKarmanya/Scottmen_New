@@ -4,6 +4,7 @@ using MySqlConnector;
 using ScottmenMainApi.Models.BLayer;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Runtime.Intrinsics.X86;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Transactions;
@@ -739,7 +740,7 @@ namespace ScottmenMainApi.Models.DLayer
             return Task.FromResult(url);
         }
 
-       
+
         private Task<string> GetSwsStoreAPIUrl()
         {
             string buildType = Utilities.GetCurrentBuild();
@@ -1608,6 +1609,19 @@ namespace ScottmenMainApi.Models.DLayer
             return rb;
         }
         #endregion
+
+        public async Task<ReturnBool> CalculateDensity(SpiritDensity spiritDensity)
+        {
+            ReturnBool rb = new();
+            if (spiritDensity.density > 0)
+            {
+                rb.status = true;
+                spiritDensity.density = (spiritDensity.density / 100) + 1;
+                decimal OtherVolume = Convert.ToDecimal(0.75);
+                rb.value = ((spiritDensity.avp * spiritDensity.density) / OtherVolume).ToString();
+            }
+            return rb;
+        }
 
     }
 }
